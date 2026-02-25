@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio of a lazy creative developer learning while coding from middle school.">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ren | Lazy Creative Developer">
+    <meta property="og:description" content="Building digital products while procrastinating on homework.">
+    <meta name="author" content="Ren3Dev">
+    <meta name="keywords" content="portfolio, developer, lazy, creative, web, interactive, student">
+    <title>Ren | Lazy Creative Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['Ubuntu Mono', 'monospace'],
+                        'sans': ['Space Grotesk', 'system-ui', 'sans-serif']
+                    },
+                    colors: {
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#121212',
+                            700: '#1a1a1a',
+                            600: '#2a2a2a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { 
+            display: none !important; 
+        }
+        
+        body {
+            position: relative;
+            scroll-behavior: smooth;
+            letter-spacing: -0.4px;
+            background-color: #0a0a0a;
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            opacity: 0.4;
+        }
+
+        .grid-container {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        .grid-container-secondary {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .project-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            width: 320px;
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05);
+        }
+
+        .projects-scroll {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+            padding: 2rem 1rem;
+            cursor: grab;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .projects-scroll:active {
+            cursor: grabbing;
+        }
+
+        [data-aos] {
+            transition-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+            will-change: transform, opacity;
+        }
+
+        [data-aos].aos-animate {
+            transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+        }
+
+        @keyframes scrollLeft {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .skills-track {
+            display: flex;
+            width: max-content;
+            animation: scrollLeft 25s linear infinite;
+        }
+
+        .skills-track:hover {
+            animation-play-state: paused;
+        }
+
+        .skills-container {
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        .skill-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .project-image {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover .project-image::after {
+            opacity: 1;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 350px;
+            border-radius: 1rem;
+            filter: grayscale(100%) invert(92%) contrast(83%);
+        }
+
+        .scroll-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scroll-dot.active {
+            background-color: #fff;
+            width: 24px;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: rgba(255,255,255,0.6);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .lazy-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            color: rgba(255,255,255,0.8);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .glow-text {
+            text-shadow: 0 0 20px rgba(255,255,255,0.1);
+        }
+
+        @media (max-width: 768px) {
+            .project-card {
+                width: 280px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-dark-900 text-gray-200 antialiased font-sans min-h-screen selection:bg-white selection:text-black">
+    <div class="grid-background">
+        <div class="grid-container"></div>
+        <div class="grid-container-secondary"></div>
+    </div>
+
+    <div id="mouse-tilt-container" class="relative">
+        <main class="flex-1 w-full max-w-7xl mx-auto px-6 pt-20 pb-8">
+            <!-- Hero Section -->
+            <section class="text-center py-2 md:py-6" data-aos="fade-down" data-aos-duration="1500">
+                <div class="lazy-badge mb-6" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-bed text-sm"></i>
+                    <span>Professional Procrastinator</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight glow-text">
+                    Ren<span class="text-gray-500">Dev</span>.
+                </h1>
+                
+                <p class="text-lg md:text-xl text-gray-400 mb-4 max-w-2xl mx-auto leading-relaxed typing-cursor" id="typewriter">
+                    Lazy Developer & Student.
+                </p>
+                
+                <p class="text-sm text-gray-500 mb-10 max-w-xl mx-auto">
+                    Currently surviving middle school (SMP) while pretending to know how to code. 
+                    Based in imagination. I build stuff when I'm not sleeping.
+                </p>
+
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="450">
+                    <a href="#projects" class="w-full sm:w-auto px-8 py-3 bg-white text-black font-medium hover:bg-gray-200 text-sm rounded-lg transition-all flex items-center justify-center group">
+                        View My Stuff
+                        <i class="material-icons align-middle text-sm ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</i>
+                    </a>
+                    <a href="#about" class="w-full sm:w-auto px-8 py-3 bg-transparent border border-gray-700 text-gray-300 font-medium hover:border-gray-500 hover:text-white text-sm rounded-lg transition-all">
+                        Why So Lazy?
+                    </a>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="py-20">
+                <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1500">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">About Me</h2>
+                    <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full mt-2 mb-4 opacity-50"></div>
+                </div>
+                
+                <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                    <div class="glass-card rounded-2xl p-8 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full blur-3xl -mr-16 -mt-16"></div>
+                        
+                        <div class="flex flex-col md:flex-row gap-8 items-center md:items-start relative z-10">
+                            <div class="w-32 h-32 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center border-2 border-gray-700 shadow-2xl relative overflow-hidden group">
+                                <i class="material-icons text-6xl text-gray-600 group-hover:text-white transition-colors">code</i>
+                                <div class="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity"></div>
+                            </div>
+                            
+                            <div class="flex-1 space-y-4 text-center md:text-left">
+                                <h3 class="text-xl font-semibold text-white">Ren</h3>
+                                <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                                    <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400 border border-white/10">8th Grade</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400 border border-white/10">Self-Taught</span>
+                                    <span class="px-3 py-1 bg-white/5 rounded-full text-xs text-gray-400 border border-white/10">Night Owl</span>
+                                </div>
+                                
+                                <p class="text-gray-400 leading-relaxed">
+                                    Hey, my name is Ren. I’m interested in things related to coding, like building websites and similar stuff, but I’m not very consistent when it comes to learning.
+                                </p>
+                                
+                                <p class="text-gray-400 leading-relaxed">
+                                    As a result, I often create websites using source code to make things easier for myself. Sometimes I get too lazy, so I end up neglecting to actually learn coding.
+                                </p>
+                                
+                                <div class="flex gap-4 pt-2 justify-center md:justify-start">
+                                    <div class="flex items-center gap-2 text-gray-500">
+                                        <i class="material-icons text-blue-400 text-sm">location_on</i>
+                                        <span class="text-sm">Bandung, Jabar</span>
+                                    </div>
+                                    <div class="flex items-center gap-2 text-gray-500">
+                                        <i class="fas fa-moon text-yellow-400 text-sm"></i>
+                                        <span class="text-sm">UTC+7 (WIB)</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Skills Section -->
+            <section id="skills" class="py-16">
+                <div class="text-center mb-10" data-aos="fade-up" data-aos-duration="1500">
+                    <h2 class="text-2xl font-bold text-white mb-2">Things I Kinda Know</h2>
+                    <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full mt-2 mb-4 opacity-50"></div>
+                    <p class="text-gray-500 text-sm">My "expertise" (I'm still learning, ok?)</p>
+                </div>
+                
+                <div class="skills-container w-full overflow-hidden" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="skills-track gap-6 py-4">
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-react text-cyan-400 text-xl"></i>
+                            <span class="font-medium">React (Kinda)</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-js text-yellow-400 text-xl"></i>
+                            <span class="font-medium">JavaScript</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-html5 text-orange-500 text-xl"></i>
+                            <span class="font-medium">HTML/CSS</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-node text-green-500 text-xl"></i>
+                            <span class="font-medium">Node.js</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-python text-blue-400 text-xl"></i>
+                            <span class="font-medium">Python (Basics)</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-solid fa-database text-purple-400 text-xl"></i>
+                            <span class="font-medium">MongoDB</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-git-alt text-orange-500 text-xl"></i>
+                            <span class="font-medium">Git</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fas fa-bed text-gray-400 text-xl"></i>
+                            <span class="font-medium">Sleeping</span>
+                        </div>
+                        <!-- Duplicate for infinite scroll -->
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-react text-cyan-400 text-xl"></i>
+                            <span class="font-medium">React (Kinda)</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-js text-yellow-400 text-xl"></i>
+                            <span class="font-medium">JavaScript</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-html5 text-orange-500 text-xl"></i>
+                            <span class="font-medium">HTML/CSS</span>
+                        </div>
+                        <div class="skill-badge flex items-center gap-3 px-6 py-3 rounded-full text-gray-300 cursor-pointer">
+                            <i class="fa-brands fa-node text-green-500 text-xl"></i>
+                            <span class="font-medium">Node.js</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="py-16">
+                <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1500">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">My Projects</h2>
+                    <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full mt-2 mb-4 opacity-50"></div>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Things I built instead of studying for exams.</p>
+                </div>
+                
+                <div class="projects-scroll" id="projects-scroll-container"></div>
+                <div class="scroll-indicator" id="scroll-indicator"></div>
+            </section>
+
+            <!-- Playlist Section -->
+            <section id="playlist" class="py-16">
+                <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1500">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Late Night Coding</h2>
+                    <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full mt-2 mb-4 opacity-50"></div>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Music for procrastinating efficiently.</p>
+                </div>
+                
+                <div class="max-w-2xl mx-auto" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                    <div class="glass-card rounded-2xl p-4 hover:border-white/20 transition-all">
+                        <div class="relative rounded-xl overflow-hidden bg-dark-800">
+<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1E8NqZ9whQeimN?utm_source=generator&theme=0" width="100%" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Location Section -->
+            <section id="location" class="py-16">
+                <div class="text-center mb-12" data-aos="fade-up" data-aos-duration="1500">
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Where i sleep</h2>
+                    <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-white to-transparent mx-auto rounded-full mt-2 mb-4 opacity-50"></div>
+                    <p class="text-gray-400 max-w-2xl mx-auto">Bandung, jawa Barat — Just a resting place .</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="100">
+                    <div class="glass-card rounded-2xl p-2 hover:border-white/20 transition-all overflow-hidden">
+                        <div class="map-container w-full h-[350px] rounded-xl overflow-hidden relative">
+                            <iframe src="https://www.google.com/maps?q=Toronto,Ontario,Canada&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                    <p class="text-center text-sm text-gray-500 mt-4 flex items-center justify-center gap-2">
+                        <i class="fas fa-map-marker-alt text-red-400"></i>
+                        Toronto, Canada, Earth
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mx-auto w-full max-w-container px-4 sm:px-6 lg:px-8 mt-20">
+            <div class="border-t border-white/10 py-10 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-center text-sm leading-6 text-gray-500">
+                    © 2025 ren — Built while avoiding homework.
+                </p>
+                <div class="flex gap-4">
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1500,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50,
+            anchorPlacement: 'top-bottom'
+        });
+
+        // Typewriter effect
+        const text = "Lazy Developer & Student.";
+        const typewriterElement = document.getElementById('typewriter');
+        let i = 0;
+        
+        function typeWriter() {
+            if (i < text.length) {
+                typewriterElement.innerHTML = text.substring(0, i+1) + '<span class="typing-cursor"></span>';
+                i++;
+                setTimeout(typeWriter, 100);
+            } else {
+                typewriterElement.classList.add('typing-cursor');
+            }
+        }
+        
+        setTimeout(typeWriter, 1000);
+
+        // Language colors mapping
+        function getLanguageColor(language) {
+            const colors = {
+                'JavaScript': 'yellow',
+                'TypeScript': 'blue',
+                'Dart': 'sky',
+                'Python': 'green',
+                'HTML': 'orange',
+                'CSS': 'purple',
+                'Blade': 'red',
+                'Lua': 'blue',
+            };
+            return colors[language] || 'gray';
+        }
+
+        // Fetch projects
+        fetch('https://raw.githubusercontent.com/Renzz4You/project/refs/heads/main/project.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const container = document.getElementById('projects-scroll-container');
+                container.innerHTML = data.projects.map((project, index) => `
+                    <a href="${project.url}" target="_blank" class="group block" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="${(index % 6) * 100}">
+                        <div class="project-card rounded-2xl overflow-hidden">
+                            <div class="project-image w-full h-48" style="background-image: url('${project.image}');">
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-60"></div>
+                            </div>
+                            <div class="p-6 bg-dark-800/50 backdrop-blur-sm">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <i class="fab fa-github text-gray-400"></i>
+                                    <h3 class="text-lg font-bold text-white group-hover:text-gray-300 transition-colors">${project.name}</h3>
+                                </div>
+                                <p class="text-sm text-gray-400 mb-4 line-clamp-2 leading-relaxed">${project.description}</p>
+                                <div class="flex items-center gap-4 text-xs text-gray-500 border-t border-white/5 pt-4">
+                                    <span class="flex items-center gap-1.5">
+                                        <span class="w-2 h-2 rounded-full bg-${getLanguageColor(project.language)}-400"></span> 
+                                        ${project.language}
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="far fa-star text-xs"></i> ${project.stars}
+                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-code-branch text-xs"></i> ${project.forks}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+
+                // Scroll indicator
+                const indicator = document.getElementById('scroll-indicator');
+                indicator.innerHTML = data.projects.map((_, i) => `<div class="scroll-dot" data-index="${i}"></div>`).join('');
+
+                const scrollContainer = document.getElementById('projects-scroll-container');
+                const dots = document.querySelectorAll('.scroll-dot');
+
+                const updateDots = () => {
+                    const scrollPos = scrollContainer.scrollLeft;
+                    const containerWidth = scrollContainer.offsetWidth;
+                    const totalWidth = scrollContainer.scrollWidth;
+                    const maxScroll = totalWidth - containerWidth;
+
+                    if (maxScroll <= 0) return;
+
+                    const percentage = scrollPos / maxScroll;
+                    const activeIndex = Math.round(percentage * (data.projects.length - 1));
+
+                    dots.forEach((dot, i) => {
+                        if (i === activeIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                };
+
+                scrollContainer.addEventListener('scroll', updateDots);
+
+                dots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        const index = dot.dataset.index;
+                        const cardWidth = (scrollContainer.children[0]?.offsetWidth || 320) + 32;
+                        scrollContainer.scrollTo({
+                            left: index * cardWidth,
+                            behavior: 'smooth'
+                        });
+                    });
+                });
+
+                updateDots();
+                AOS.refresh();
+            })
+            .catch(error => {
+                console.error('Error loading projects:', error);
+                document.getElementById('projects-scroll-container').innerHTML = `
+                    <div class="w-full text-center py-20">
+                        <i class="fas fa-bed text-4xl text-gray-600 mb-4"></i>
+                        <p class="text-gray-500">Too lazy to load projects. Error: ${error.message}</p>
+                    </div>
+                `;
+            });
+    </script>
+</body>
+</html>
