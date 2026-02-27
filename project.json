@@ -1,11 +1,11 @@
 {
   "projects": [
     {
-      "name": "Coming soon",
-      "description": "Coming soon",
-      "image": "https://files.catbox.moe/hocfe6.jpg",
-      "url": "https://files.catbox.moe/hocfe6.jpg",
-      "language": "txt",
+      "name": "NeerChat Ai",
+      "description": "Ai asisten yang dapat membantu anda mengerjakan hal sulit",
+      "image": "https://files.catbox.moe/wbpsjc.jpg",
+      "url": "https://NeerChat.ekslusif.tech",
+      "language": "HTML",
       "stars": 0,
       "forks": 0
     }, 
