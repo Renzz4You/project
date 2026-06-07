@@ -5,18 +5,18 @@
       "description": "Ai asisten yang dapat membantu anda mengerjakan hal sulit",
       "image": "https://files.catbox.moe/wbpsjc.jpg",
       "url": "https://NeerChat.ekslusif.tech",
-      "author": "ren",
-      "like": 283,
-      "dislike": 120
+      "language": "HTML",
+      "stars": 223,
+      "fork": 0
     }, 
     {
       "name": "Coming soon",
       "description": "Coming soon",
       "image": "https://files.catbox.moe/hocfe6.jpg",
       "url": "https://files.catbox.moe/hocfe6.jpg",
-      "author": "coming soon",
-      "like": 0,
-      "dislike": 0
+      "language": "-",
+      "stars": 0,
+      "fork": 0
     }
   ]
     }
