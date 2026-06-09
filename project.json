@@ -10,6 +10,15 @@
       "forks": 0
     }, 
     {
+      "name": "Gleyverse",
+      "description": "web portofolio sederhana milik cust : gleya, dibuat oleh @rskl411_",
+      "image": "https://files.catbox.moe/48hq8o.jpg",
+      "url": "https://files.catbox.moe/48hq8o.jpg",
+      "language": "HTML, CSS, JS",
+      "stars": 234,
+      "forks": 2
+    },  
+    {
       "name": "Coming soon",
       "description": "Coming soon",
       "image": "https://files.catbox.moe/hocfe6.jpg",
